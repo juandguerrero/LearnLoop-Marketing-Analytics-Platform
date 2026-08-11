@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_stripe_subscriptions
+    description: Flattened Stripe subscription records.
+
+    columns:
+
+      - name: subscription_id
+        description: Unique Stripe subscription ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Customer associated with the subscription.
+        data_tests:
+          - not_null
+
+      - name: lead_id
+        description: Original HubSpot lead.
+        data_tests:
+          - not_null
+
+      - name: plan_id
+        description: Subscription plan identifier.
+        data_tests:
+          - not_null
+
+      - name: plan_name
+        description: Subscription plan name.
+        data_tests:
+          - not_null
+
+      - name: status
+        description: Current subscription status.
+        data_tests:
+          - not_null
+
+      - name: subscription_start_date
+        description: Subscription start date.
+        data_tests:
+          - not_null
+
+      - name: monthly_price
+        description: Monthly subscription price.
+        data_tests:
+          - not_null

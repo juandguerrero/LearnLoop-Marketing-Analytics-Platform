@@ -1,0 +1,318 @@
+version: 2
+
+models:
+  - name: kpi_campaign_performance
+    description: >
+      Daily campaign performance model combining advertising spend,
+      lead acquisition, customer conversions, and attributed revenue.
+
+    columns:
+      - name: date_key
+        description: Date dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: campaign_key
+        description: Campaign dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: channel_key
+        description: Channel dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_channel')
+                field: channel_key
+
+      - name: ad_spend
+        description: Total advertising spend.
+        data_tests:
+          - not_null
+
+      - name: impressions
+        description: Total advertising impressions.
+        data_tests:
+          - not_null
+
+      - name: clicks
+        description: Total advertising clicks.
+        data_tests:
+          - not_null
+
+      - name: leads
+        description: Total generated leads.
+        data_tests:
+          - not_null
+
+      - name: customers
+        description: Total customer conversions.
+        data_tests:
+          - not_null
+
+      - name: revenue
+        description: Revenue attributed to the acquisition campaign.
+        data_tests:
+          - not_null
+
+
+  - name: kpi_funnel_performance
+    description: >
+      Daily acquisition funnel performance by campaign and channel,
+      including sessions, leads, MQLs, SQLs, customers, and conversion rates.
+
+    columns:
+      - name: date_key
+        description: Date dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: campaign_key
+        description: Campaign dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: channel_key
+        description: Channel dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_channel')
+                field: channel_key
+
+      - name: sessions
+        description: Total website sessions.
+        data_tests:
+          - not_null
+
+      - name: leads
+        description: Total leads.
+        data_tests:
+          - not_null
+
+      - name: mqls
+        description: Total marketing-qualified leads.
+        data_tests:
+          - not_null
+
+      - name: sqls
+        description: Total sales-qualified leads.
+        data_tests:
+          - not_null
+
+      - name: customers
+        description: Total customers generated from the funnel.
+        data_tests:
+          - not_null
+
+
+  - name: kpi_subscription_performance
+    description: >
+      Subscription performance by start date, acquisition campaign,
+      and subscription plan, including subscriptions, active subscriptions,
+      customers, MRR, and ARR.
+
+    columns:
+      - name: date_key
+        description: Subscription start-date dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: subscription_plan_key
+        description: Subscription-plan dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_subscription_plan')
+                field: subscription_plan_key
+
+      - name: campaign_key
+        description: Acquisition campaign dimension key.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: subscriptions
+        description: Total subscriptions.
+        data_tests:
+          - not_null
+
+      - name: active_subscriptions
+        description: Total active subscriptions.
+        data_tests:
+          - not_null
+
+      - name: customers
+        description: Distinct customers within the model grain.
+        data_tests:
+          - not_null
+
+      - name: mrr
+        description: Monthly recurring revenue.
+        data_tests:
+          - not_null
+
+      - name: arr
+        description: Annual recurring revenue.
+        data_tests:
+          - not_null
+
+
+  - name: kpi_customer_value
+    description: >
+      Customer-level revenue and lifetime value model used to analyze
+      customer value, payments, refunds, acquisition campaigns,
+      and subscription plans.
+
+    columns:
+      - name: customer_key
+        description: Customer dimension key and unique model grain.
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: campaign_key
+        description: Customer acquisition campaign key.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: subscription_plan_key
+        description: Customer subscription-plan key.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_subscription_plan')
+                field: subscription_plan_key
+
+      - name: lifetime_value
+        description: Customer net lifetime revenue.
+        data_tests:
+          - not_null
+
+      - name: gross_revenue
+        description: Customer gross revenue before refunds.
+        data_tests:
+          - not_null
+
+      - name: total_refunds
+        description: Total refunded amount for the customer.
+        data_tests:
+          - not_null
+
+      - name: successful_payments
+        description: Number of successful customer payments.
+        data_tests:
+          - not_null
+
+      - name: refunded_payments
+        description: Number of refunded customer payments.
+        data_tests:
+          - not_null
+
+      - name: payment_records
+        description: Total payment records for the customer.
+        data_tests:
+          - not_null
+
+
+  - name: kpi_course_performance
+    description: >
+      Daily course performance model containing enrollments,
+      completions, incomplete enrollments, customers, average progress,
+      and completion rate by course.
+
+    columns:
+      - name: date_key
+        description: Enrollment-date dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: course_key
+        description: Course dimension key.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_course')
+                field: course_key
+
+      - name: course_id
+        description: Business identifier of the course.
+        data_tests:
+          - not_null
+
+      - name: course_name
+        description: Course name.
+        data_tests:
+          - not_null
+
+      - name: course_category
+        description: Course category.
+        data_tests:
+          - not_null
+
+      - name: enrollment_records
+        description: Number of enrollment records in the model grain.
+        data_tests:
+          - not_null
+
+      - name: enrollments
+        description: Total enrollments.
+        data_tests:
+          - not_null
+
+      - name: completions
+        description: Total completed enrollments.
+        data_tests:
+          - not_null
+
+      - name: incomplete_enrollments
+        description: Total incomplete enrollments.
+        data_tests:
+          - not_null
+
+      - name: customers
+        description: Distinct enrolled customers within the model grain.
+        data_tests:
+          - not_null
+
+      - name: avg_progress_percentage
+        description: Average course progress percentage.
+        data_tests:
+          - not_null

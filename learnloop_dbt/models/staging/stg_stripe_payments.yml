@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: stg_stripe_payments
+    description: Flattened and typed Stripe payment transactions.
+
+    columns:
+      - name: payment_id
+        description: Unique identifier for the payment.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Customer associated with the payment.
+        data_tests:
+          - not_null
+
+      - name: subscription_id
+        description: Subscription associated with the payment.
+        data_tests:
+          - not_null
+
+      - name: payment_date
+        description: Date when the payment occurred.
+        data_tests:
+          - not_null
+
+      - name: payment_status
+        description: Current status of the payment.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - succeeded
+                  - failed
+                  - pending
+
+      - name: amount
+        description: Gross payment amount.
+        data_tests:
+          - not_null
+
+      - name: refund_amount
+        description: Amount refunded for the payment.
+        data_tests:
+          - not_null
+
+      - name: net_revenue
+        description: Net revenue after refunds.
+        data_tests:
+          - not_null
+
+      - name: currency
+        description: Payment currency.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - USD
+
+      - name: refunded
+        description: Indicates whether the payment was refunded.
+        data_tests:
+          - not_null

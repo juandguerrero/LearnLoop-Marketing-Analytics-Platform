@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_google_ads
+    description: Clean Google Ads campaign performance data.
+
+    columns:
+
+      - name: campaign_id
+        data_tests:
+          - not_null
+
+      - name: campaign_name
+        data_tests:
+          - not_null
+
+      - name: campaign_date
+        data_tests:
+          - not_null
+
+      - name: impressions
+        data_tests:
+          - not_null
+
+      - name: clicks
+        data_tests:
+          - not_null
+
+      - name: cost
+        data_tests:
+          - not_null

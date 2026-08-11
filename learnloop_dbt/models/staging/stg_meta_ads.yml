@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: stg_meta_ads
+    description: Flattened and typed Meta Ads campaign-performance data.
+
+    columns:
+      - name: campaign_id
+        data_tests:
+          - not_null
+
+      - name: campaign_name
+        data_tests:
+          - not_null
+
+      - name: campaign_date
+        data_tests:
+          - not_null
+
+      - name: impressions
+        data_tests:
+          - not_null
+
+      - name: clicks
+        data_tests:
+          - not_null
+
+      - name: cost
+        data_tests:
+          - not_null
+
+      - name: source_system
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - meta_ads

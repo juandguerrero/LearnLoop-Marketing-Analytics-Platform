@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw JSON documents loaded from AWS S3 into Snowflake.
+    database: LEARNLOOP_ANALYTICS
+    schema: RAW
+
+    tables:
+      - name: ga4_sessions
+        identifier: GA4_SESSIONS
+
+      - name: google_ads_campaign_performance
+        identifier: GOOGLE_ADS_CAMPAIGN_PERFORMANCE
+
+      - name: hubspot_contacts
+        identifier: HUBSPOT_CONTACTS
+
+      - name: learnloop_course_enrollments
+        identifier: LEARNLOOP_COURSE_ENROLLMENTS
+
+      - name: meta_ads_campaign_performance
+        identifier: META_ADS_CAMPAIGN_PERFORMANCE
+
+      - name: stripe_payments
+        identifier: STRIPE_PAYMENTS
+
+      - name: stripe_subscriptions
+        identifier: STRIPE_SUBSCRIPTIONS

@@ -1,0 +1,54 @@
+# ============================================
+# LearnLoop - Git Ignore
+# ============================================
+
+# Environment variables / secrets
+.env
+*.env
+.env.*
+!.env.example
+
+# Python virtual environments
+airflow_venv/
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python tooling / test cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# dbt generated files
+learnloop_dbt/target/
+learnloop_dbt/logs/
+learnloop_dbt/dbt_packages/
+
+# Airflow generated files
+airflow/logs/
+airflow/airflow.db
+airflow/airflow.db-shm
+airflow/airflow.db-wal
+airflow/airflow.cfg
+airflow/webserver_config.py
+airflow/simple_auth_manager_passwords.json.generated
+
+# Project logs
+logs/
+*.log
+
+# Generated synthetic raw data
+synthetic_data/raw/
+
+# VS Code
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db

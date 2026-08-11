@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_course_enrollments
+    description: Cleaned LearnLoop course enrollments.
+
+    columns:
+
+      - name: enrollment_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        data_tests:
+          - not_null
+
+      - name: subscription_id
+        data_tests:
+          - not_null
+
+      - name: course_id
+        data_tests:
+          - not_null
+
+      - name: course_name
+        data_tests:
+          - not_null
+
+      - name: course_category
+        data_tests:
+          - not_null
+
+      - name: enrollment_date
+        data_tests:
+          - not_null
+
+      - name: progress_percentage
+        data_tests:
+          - not_null
+
+      - name: completed
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]

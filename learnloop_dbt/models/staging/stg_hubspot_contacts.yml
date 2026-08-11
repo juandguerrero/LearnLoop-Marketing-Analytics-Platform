@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_hubspot_contacts
+    description: Flattened and typed HubSpot contacts.
+
+    columns:
+      - name: lead_id
+        description: Unique lead identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: email
+        description: Lead email address.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: created_date
+        description: Date the lead was created.
+        data_tests:
+          - not_null
+
+      - name: lifecycle_stage
+        description: HubSpot lifecycle stage.
+        data_tests:
+          - not_null
+
+      - name: campaign_id
+        description: Campaign that generated the lead.
+        data_tests:
+          - not_null
+
+      - name: is_mql
+        description: Marketing Qualified Lead flag.
+        data_tests:
+          - not_null
+
+      - name: is_sql
+        description: Sales Qualified Lead flag.
+        data_tests:
+          - not_null
+
+      - name: is_customer
+        description: Customer flag.
+        data_tests:
+          - not_null

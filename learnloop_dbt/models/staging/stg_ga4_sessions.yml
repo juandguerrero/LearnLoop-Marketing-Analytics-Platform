@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_ga4_sessions
+    description: Clean GA4 sessions extracted from the raw JSON dataset.
+
+    columns:
+
+      - name: session_id
+        description: Unique session identifier.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        description: User identifier.
+        data_tests:
+          - not_null
+
+      - name: session_date
+        description: Date of the session.
+        data_tests:
+          - not_null
+
+      - name: campaign_id
+        description: Marketing campaign.
+
+      - name: campaign_name
+        description: Campaign name.
+
+      - name: source
+        description: Traffic source.
+
+      - name: medium
+        description: Traffic medium.
+
+      - name: country
+        description: Visitor country.
+
+      - name: device_category
+        description: Device type.
+
+      - name: page_views
+        description: Pages viewed.
+
+      - name: session_duration_seconds
+        description: Session duration.
+
+      - name: engaged_session
+        description: Engaged session flag.
+
+      - name: bounce
+        description: Bounce flag.
+
+      - name: landing_page
+        description: Landing page URL.

@@ -1,0 +1,965 @@
+version: 2
+
+models:
+  - name: dim_customer
+    description: >
+      Customer dimension combining Stripe revenue and subscription
+      information with HubSpot and GA4 acquisition information.
+      The grain is one row per customer.
+
+    columns:
+      - name: customer_key
+        description: Surrogate key generated from the Stripe customer ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Natural customer identifier from Stripe.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: lead_id
+        description: HubSpot lead identifier associated with the customer.
+
+      - name: user_id
+        description: Website user identifier associated with the customer.
+
+      - name: session_id
+        description: Acquisition session associated with the lead.
+
+      - name: lead_created_date
+        description: Date on which the CRM lead was created.
+
+      - name: lifecycle_stage
+        description: Latest HubSpot lifecycle stage.
+
+      - name: original_source
+        description: Original acquisition source recorded by HubSpot.
+
+      - name: is_mql
+        description: Indicates whether the lead became marketing-qualified.
+
+      - name: is_sql
+        description: Indicates whether the lead became sales-qualified.
+
+      - name: is_customer
+        description: Indicates whether the lead became a customer.
+
+      - name: acquisition_session_date
+        description: Date of the GA4 acquisition session.
+
+      - name: acquisition_campaign_id
+        description: Campaign identifier associated with customer acquisition.
+
+      - name: acquisition_campaign_name
+        description: Campaign name associated with customer acquisition.
+
+      - name: traffic_source
+        description: GA4 traffic source associated with acquisition.
+
+      - name: traffic_medium
+        description: GA4 traffic medium associated with acquisition.
+
+      - name: device_category
+        description: Device used during the acquisition session.
+
+      - name: country
+        description: Customer or acquisition country.
+
+      - name: landing_page
+        description: First landing page associated with acquisition.
+
+      - name: successful_payment_count
+        description: Number of successful customer payments.
+        data_tests:
+          - not_null
+
+      - name: gross_revenue
+        description: Customer revenue before refunds.
+        data_tests:
+          - not_null
+
+      - name: total_refund_amount
+        description: Total amount refunded to the customer.
+        data_tests:
+          - not_null
+
+      - name: total_revenue
+        description: Customer net revenue after refunds.
+        data_tests:
+          - not_null
+
+      - name: first_payment_date
+        description: Date of the customer's first successful payment.
+
+      - name: last_payment_date
+        description: Date of the customer's most recent successful payment.
+
+      - name: latest_subscription_id
+        description: Most recent subscription identifier.
+
+      - name: latest_subscription_status
+        description: Status of the most recent subscription.
+
+      - name: latest_plan_id
+        description: Most recent subscription plan identifier.
+
+      - name: latest_plan_name
+        description: Most recent subscription plan name.
+
+      - name: latest_monthly_price
+        description: Monthly price of the latest plan.
+
+      - name: subscription_start_date
+        description: Start date of the latest subscription.
+
+      - name: is_active_subscriber
+        description: Indicates whether the latest subscription is active.
+        data_tests:
+          - not_null
+  - name: dim_campaign
+    description: >
+      Campaign dimension containing standardized campaign attributes
+      from Google Ads and Meta Ads. The grain is one row per
+      advertising platform and campaign.
+
+    columns:
+      - name: campaign_key
+        description: >
+          Surrogate key generated from advertising platform and campaign ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: platform
+        description: Advertising platform associated with the campaign.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - google_ads
+                  - meta_ads
+
+      - name: campaign_id
+        description: Natural campaign identifier from the source platform.
+        data_tests:
+          - not_null
+
+      - name: campaign_name
+        description: Campaign name from the advertising platform.
+        data_tests:
+          - not_null
+
+      - name: campaign_type
+        description: Campaign classification from the advertising platform.
+  - name: dim_date
+    description: >
+      Calendar dimension covering the full date range used across
+      marketing, acquisition, subscriptions, and revenue models.
+      The grain is one row per calendar date.
+
+    columns:
+      - name: date_key
+        description: Integer date key formatted as YYYYMMDD.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: full_date
+        description: Calendar date.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: year
+        description: Calendar year.
+        data_tests:
+          - not_null
+
+      - name: quarter_number
+        description: Calendar quarter number from 1 to 4.
+        data_tests:
+          - not_null
+
+      - name: month_number
+        description: Calendar month number from 1 to 12.
+        data_tests:
+          - not_null
+
+      - name: month_name
+        description: Abbreviated calendar month name.
+        data_tests:
+          - not_null
+
+      - name: day_of_month
+        description: Day number within the month.
+        data_tests:
+          - not_null
+
+      - name: day_of_week_number
+        description: ISO weekday number where Monday is 1 and Sunday is 7.
+        data_tests:
+          - not_null
+
+      - name: day_name
+        description: Abbreviated weekday name.
+        data_tests:
+          - not_null
+
+      - name: week_of_year
+        description: ISO week number.
+        data_tests:
+          - not_null
+
+      - name: is_weekend
+        description: Indicates whether the date falls on Saturday or Sunday.
+        data_tests:
+          - not_null
+  - name: fact_marketing_spend
+    description: >
+      Daily campaign advertising performance fact table built from
+      standardized Google Ads and Meta Ads data. The grain is one row
+      per date, advertising platform, and campaign.
+
+    columns:
+      - name: marketing_spend_key
+        description: >
+          Surrogate key generated from performance date, platform,
+          and campaign ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_key
+        description: Foreign key referencing dim_date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: campaign_key
+        description: Foreign key referencing dim_campaign.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: channel_key
+        description: Foreign key referencing dim_channel.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_channel')
+                field: channel_key
+
+      - name: performance_date
+        description: Date on which the campaign activity occurred.
+        data_tests:
+          - not_null
+
+      - name: platform
+        description: Advertising platform.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - google_ads
+                  - meta_ads
+
+      - name: campaign_id
+        description: Natural campaign identifier.
+        data_tests:
+          - not_null
+
+      - name: impressions
+        description: Number of campaign impressions.
+        data_tests:
+          - not_null
+
+      - name: clicks
+        description: Number of campaign clicks.
+        data_tests:
+          - not_null
+
+      - name: ad_spend
+        description: Daily advertising spend.
+        data_tests:
+          - not_null
+
+      - name: cost_per_click
+        description: Advertising spend divided by clicks.
+
+      - name: click_through_rate
+        description: Clicks divided by impressions.
+  - name: fact_leads
+    description: >
+      Lead-level fact table containing CRM funnel stages and website
+      engagement metrics. The grain is one row per HubSpot lead.
+
+    columns:
+      - name: lead_key
+        description: Surrogate key generated from the HubSpot lead ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_key
+        description: Foreign key referencing the lead creation date in dim_date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: campaign_key
+        description: Foreign key referencing dim_campaign.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: channel_key
+        description: Foreign key referencing dim_channel.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_channel')
+                field: channel_key
+
+      - name: customer_key
+        description: >
+          Foreign key referencing dim_customer when the lead became a
+          customer. Null for leads that did not convert.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: lead_id
+        description: Natural HubSpot lead identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: lead_created_date
+        description: Date on which the lead was created.
+        data_tests:
+          - not_null
+
+      - name: lifecycle_stage
+        description: CRM lifecycle stage assigned to the lead.
+        data_tests:
+          - not_null
+
+      - name: platform
+        description: Advertising platform associated with the campaign.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - google_ads
+                  - meta_ads
+
+      - name: campaign_id
+        description: Natural campaign identifier.
+        data_tests:
+          - not_null
+
+      - name: is_mql
+        description: Indicates whether the lead became marketing-qualified.
+        data_tests:
+          - not_null
+
+      - name: is_sql
+        description: Indicates whether the lead became sales-qualified.
+        data_tests:
+          - not_null
+
+      - name: is_customer
+        description: Indicates whether the lead became a customer.
+        data_tests:
+          - not_null
+
+      - name: lead_count
+        description: Additive measure with a value of one for every lead.
+        data_tests:
+          - not_null
+
+      - name: mql_count
+        description: Additive measure equal to one for marketing-qualified leads.
+        data_tests:
+          - not_null
+
+      - name: sql_count
+        description: Additive measure equal to one for sales-qualified leads.
+        data_tests:
+          - not_null
+
+      - name: customer_conversion_count
+        description: Additive measure equal to one when the lead became a customer.
+        data_tests:
+          - not_null
+  - name: fact_revenue
+    description: >
+      Payment-level revenue fact table built from Stripe payments.
+      The grain is one row per payment.
+
+    columns:
+      - name: revenue_key
+        description: Surrogate key generated from the Stripe payment ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: date_key
+        description: Foreign key referencing dim_date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: customer_key
+        description: Foreign key referencing dim_customer.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: campaign_key
+        description: Foreign key referencing dim_campaign when available.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: subscription_plan_key
+        description: Foreign key referencing dim_subscription_plan.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_subscription_plan')
+                field: subscription_plan_key
+
+      - name: payment_id
+        description: Natural Stripe payment identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Natural Stripe customer identifier.
+        data_tests:
+          - not_null
+
+      - name: subscription_id
+        description: Stripe subscription identifier.
+        data_tests:
+          - not_null
+
+      - name: payment_date
+        description: Date on which the payment occurred.
+        data_tests:
+          - not_null
+
+      - name: payment_status
+        description: Status of the Stripe payment.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - succeeded
+                  - failed
+                  - pending
+
+      - name: amount
+        description: Gross payment amount.
+        data_tests:
+          - not_null
+
+      - name: refund_amount
+        description: Amount refunded from the payment.
+        data_tests:
+          - not_null
+
+      - name: net_revenue
+        description: Revenue after refunds.
+        data_tests:
+          - not_null
+
+      - name: currency
+        description: Payment currency.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - USD
+
+      - name: refunded
+        description: Indicates whether the payment was refunded.
+        data_tests:
+          - not_null
+
+      - name: successful_payment_count
+        description: Additive measure equal to one for successful payments.
+        data_tests:
+          - not_null
+
+      - name: refunded_payment_count
+        description: Additive measure equal to one for refunded payments.
+        data_tests:
+          - not_null
+  - name: fact_subscriptions
+    description: >
+      Subscription-level fact table built from Stripe subscription metrics.
+      The grain is one row per subscription.
+
+    columns:
+      - name: subscription_key
+        description: Surrogate key generated from the Stripe subscription ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: subscription_start_date_key
+        description: Foreign key referencing dim_date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: customer_key
+        description: Foreign key referencing dim_customer.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: campaign_key
+        description: Foreign key referencing dim_campaign when available.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: subscription_plan_key
+        description: Foreign key referencing dim_subscription_plan.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_subscription_plan')
+                field: subscription_plan_key
+
+      - name: subscription_id
+        description: Natural Stripe subscription identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Natural Stripe customer identifier.
+        data_tests:
+          - not_null
+
+      - name: plan_id
+        description: Subscription plan identifier.
+        data_tests:
+          - not_null
+
+      - name: plan_name
+        description: Subscription plan name.
+        data_tests:
+          - not_null
+
+      - name: monthly_price
+        description: Monthly subscription price.
+        data_tests:
+          - not_null
+
+      - name: subscription_status
+        description: Current subscription status.
+        data_tests:
+          - not_null
+
+      - name: subscription_start_date
+        description: Date when the subscription started.
+        data_tests:
+          - not_null
+
+      - name: is_active_subscription
+        description: Indicates whether the subscription is active.
+        data_tests:
+          - not_null
+
+      - name: monthly_recurring_revenue
+        description: Monthly recurring revenue represented by the subscription.
+        data_tests:
+          - not_null
+
+      - name: annual_recurring_revenue
+        description: Annual recurring revenue represented by the subscription.
+        data_tests:
+          - not_null
+
+      - name: subscription_age_days
+        description: Number of days since the subscription started.
+        data_tests:
+          - not_null
+
+      - name: subscription_count
+        description: Additive measure equal to one for each subscription.
+        data_tests:
+          - not_null
+
+      - name: active_subscription_count
+        description: Additive measure equal to one for active subscriptions.
+        data_tests:
+          - not_null
+  - name: dim_course
+    description: >
+      Course dimension containing descriptive course attributes.
+      The grain is one row per course.
+
+    columns:
+      - name: course_key
+        description: Surrogate key generated from the natural course ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: course_id
+        description: Natural course identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: course_name
+        description: Course name.
+        data_tests:
+          - not_null
+
+      - name: course_category
+        description: Course category.
+        data_tests:
+          - not_null
+  - name: fact_course_enrollments
+    description: >
+      Course enrollment fact table containing customer progress and
+      completion information. The grain is one row per enrollment.
+
+    columns:
+      - name: enrollment_key
+        description: Surrogate key generated from the enrollment ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: enrollment_date_key
+        description: Foreign key referencing dim_date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: customer_key
+        description: Foreign key referencing dim_customer.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: course_key
+        description: Foreign key referencing dim_course.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_course')
+                field: course_key
+
+      - name: enrollment_id
+        description: Natural course enrollment identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: Natural customer identifier.
+        data_tests:
+          - not_null
+
+      - name: subscription_id
+        description: Subscription associated with the enrollment.
+        data_tests:
+          - not_null
+
+      - name: course_id
+        description: Natural course identifier.
+        data_tests:
+          - not_null
+
+      - name: enrollment_date
+        description: Date on which the customer enrolled in the course.
+        data_tests:
+          - not_null
+
+      - name: progress_percentage
+        description: Percentage of the course completed by the customer.
+        data_tests:
+          - not_null
+
+      - name: completed
+        description: Indicates whether the customer completed the course.
+        data_tests:
+          - not_null
+
+      - name: enrollment_count
+        description: Additive measure equal to one for each enrollment.
+        data_tests:
+          - not_null
+
+      - name: completion_count
+        description: Additive measure equal to one for completed enrollments.
+        data_tests:
+          - not_null
+
+      - name: incomplete_enrollment_count
+        description: Additive measure equal to one for incomplete enrollments.
+        data_tests:
+          - not_null
+  - name: fact_website_sessions
+    description: >
+      Website session fact table built from GA4 session data.
+      The grain is one row per session.
+
+    columns:
+      - name: session_key
+        description: Surrogate key generated from the GA4 session ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: session_date_key
+        description: Foreign key referencing dim_date.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+
+      - name: campaign_key
+        description: Foreign key referencing dim_campaign.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_key
+
+      - name: channel_key
+        description: Foreign key referencing dim_channel.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_channel')
+                field: channel_key
+
+      - name: device_key
+        description: Foreign key referencing dim_device.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_device')
+                field: device_key
+
+      - name: customer_key
+        description: >
+          Foreign key referencing dim_customer when the GA4 user later
+          became a customer. Null for anonymous or non-converted users.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+
+      - name: session_id
+        description: Natural GA4 session identifier.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: user_id
+        description: GA4 user identifier.
+        data_tests:
+          - not_null
+
+      - name: session_date
+        description: Date on which the session occurred.
+        data_tests:
+          - not_null
+
+      - name: platform
+        description: Advertising platform associated with the campaign.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - google_ads
+                  - meta_ads
+
+      - name: campaign_id
+        description: Campaign identifier associated with the session.
+        data_tests:
+          - not_null
+
+      - name: page_views
+        description: Number of pages viewed during the session.
+        data_tests:
+          - not_null
+
+      - name: engaged_session
+        description: Indicates whether the GA4 session was engaged.
+        data_tests:
+          - not_null
+
+      - name: bounced_session
+        description: Indicates whether the GA4 session bounced.
+        data_tests:
+          - not_null
+
+      - name: session_count
+        description: Additive measure equal to one for every session.
+        data_tests:
+          - not_null
+
+      - name: engaged_session_count
+        description: Additive measure equal to one for engaged sessions.
+        data_tests:
+          - not_null
+
+      - name: bounced_session_count
+        description: Additive measure equal to one for bounced sessions.
+        data_tests:
+          - not_null
+  - name: dim_channel
+    description: >
+      Standardized marketing and website acquisition channels from
+      advertising platforms and GA4 traffic sources.
+
+    columns:
+      - name: channel_key
+        description: Surrogate key generated from the standardized channel name.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: channel_name
+        description: Standardized channel or traffic source name.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: channel_group
+        description: Broader classification of the acquisition channel.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - paid advertising
+                  - organic
+                  - email
+                  - referral
+                  - direct
+                  - other
+  - name: dim_device
+    description: >
+      Device dimension used to analyze website sessions,
+      engagement, and conversions by device category.
+
+    columns:
+      - name: device_key
+        description: Surrogate key generated from the standardized device category.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: device_category
+        description: Standardized GA4 device category.
+        data_tests:
+          - not_null
+          - unique
+          - accepted_values:
+              arguments:
+                values:
+                  - mobile
+                  - desktop
+                  - tablet
+  - name: dim_subscription_plan
+    description: >
+      Subscription plan dimension containing the available Stripe
+      subscription plans and their pricing.
+
+    columns:
+      - name: subscription_plan_key
+        description: Surrogate key generated from the subscription plan ID.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: plan_id
+        description: Business identifier of the subscription plan.
+        data_tests:
+          - not_null
+          - unique
+
+      - name: plan_name
+        description: Name of the subscription plan.
+        data_tests:
+          - not_null
+
+      - name: monthly_price
+        description: Monthly price of the subscription plan.
+        data_tests:
+          - not_null
+
+      - name: annual_price
+        description: Annualized subscription price calculated as monthly price multiplied by 12.
+        data_tests:
+          - not_null
