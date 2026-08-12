@@ -104,7 +104,7 @@ El **ROAS, CAC, ingresos y valor del cliente** a nivel de campaña, junto con **
 
 **Suscripciones · Suscripciones Activas · MRR · ARR · CLV · MRR por Plan · Valor del Cliente por Campaña**
 
-![Dashboard de Suscripciones y Valor del Cliente](docs/dashboards/subscription_&_customer_value.jpg)
+![Dashboard de Suscripciones y Valor del Cliente](docs/dashboards/subscription_customer_value.jpg)
 
 ### 4. Desempeño de Cursos
 
