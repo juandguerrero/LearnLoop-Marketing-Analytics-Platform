@@ -38,10 +38,12 @@ LearnLoop should improve **campaign efficiency and funnel conversion**, then shi
 ## Recommendations
 
 1. **Reallocate budget toward higher-ROAS campaigns**
+
    - Reduce spend on campaigns with weak revenue return.
    - Increase investment in campaigns with stronger ROAS and customer value.
 
 2. **Set campaign-level ROAS and CAC targets**
+
    - Classify campaigns as:
      - **Scale**
      - **Optimize**
@@ -49,12 +51,15 @@ LearnLoop should improve **campaign efficiency and funnel conversion**, then shi
      - **Pause**
 
 3. **Improve funnel conversion before buying more traffic**
+
    - Optimize landing pages, lead forms, free trials, lead nurturing, and sales follow-up.
 
 4. **Evaluate CAC together with CLV**
+
    - A campaign with higher CAC can still be valuable if it produces customers with higher lifetime value.
 
 5. **Optimize for customers and revenue, not clicks**
+
    - Marketing performance should be measured across the full journey:
 
 **Spend → Leads → Customers → Subscriptions → Revenue → CLV**
@@ -64,7 +69,7 @@ LearnLoop should improve **campaign efficiency and funnel conversion**, then shi
 ## Business Questions & Answers
 
 | Business Question | Answer / KPI |
-|---|---|
+| --- | --- |
 | How much was invested in advertising? | **$1.11M** |
 | How much attributed revenue was generated? | **$373.5K** |
 | What was the overall ROAS? | **0.34x** |
@@ -84,16 +89,28 @@ Campaign-level **ROAS, CAC, revenue and customer value**, along with **MRR, ARR,
 ## Tableau Dashboards
 
 ### 1. Campaign Performance
+
 **Ad Spend · Revenue · ROAS · CAC · Revenue by Campaign · ROAS by Campaign · Spend vs. Revenue · Performance Over Time**
 
+![Campaign Performance Dashboard](docs/dashboards/campaign_performance.jpg)
+
 ### 2. Marketing Funnel
+
 **Sessions → Leads → MQLs → SQLs → Customers · Conversion Rates · Funnel Drop-Off · Conversion Trends**
 
+![Marketing Funnel Dashboard](docs/dashboards/marketing_funnel.jpg)
+
 ### 3. Subscription & Customer Value
+
 **Subscriptions · Active Subscriptions · MRR · ARR · CLV · MRR by Plan · Customer Value by Campaign**
 
+![Subscription and Customer Value Dashboard](docs/dashboards/subscription_&_customer_value.jpg)
+
 ### 4. Course Performance
+
 **Enrollments · Completions · Completion Rate · Enrollments by Course · Category · Performance Over Time**
+
+![Course Performance Dashboard](docs/dashboards/course_performance.jpg)
 
 ---
 
@@ -162,7 +179,7 @@ Automated **dbt tests** validate:
 ## Technology Stack
 
 | Area | Technologies |
-|---|---|
+| --- | --- |
 | **Analysis & BI** | SQL, Tableau |
 | **Data Warehouse** | Snowflake |
 | **Transformation** | dbt |
@@ -178,6 +195,12 @@ Automated **dbt tests** validate:
 ```text
 LearnLoop/
 ├── airflow/
+├── docs/
+│   └── dashboards/
+│       ├── campaign_performance.jpg
+│       ├── course_performance.jpg
+│       ├── marketing_funnel.jpg
+│       └── subscription_&_customer_value.jpg
 ├── ingestion/
 ├── learnloop_dbt/
 │   └── models/
