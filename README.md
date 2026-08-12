@@ -68,19 +68,19 @@ LearnLoop should improve **campaign efficiency and funnel conversion**, then shi
 
 ## Business Questions & Answers
 
-| Business Question | Answer / KPI |
-| --- | --- |
-| How much was invested in advertising? | **$1.11M** |
-| How much attributed revenue was generated? | **$373.5K** |
-| What was the overall ROAS? | **0.34x** |
-| What was the CAC? | **$116.08** |
-| How many website sessions were generated? | **740,283** |
-| How many leads were generated? | **93,276** |
-| How many customers were acquired? | **9,592** |
-| What was Lead-to-Customer conversion? | **~10.3%** |
-| What was Session-to-Customer conversion? | **~1.3%** |
-| How many subscriptions were generated? | **9,592** |
-| How many course enrollments were generated? | **16,628** |
+| Business Question                           | Answer / KPI |
+| ------------------------------------------- | ------------ |
+| How much was invested in advertising?       | **$1.11M**   |
+| How much attributed revenue was generated?  | **$373.5K**  |
+| What was the overall ROAS?                  | **0.34x**    |
+| What was the CAC?                           | **$116.08**  |
+| How many website sessions were generated?   | **740,283**  |
+| How many leads were generated?              | **93,276**   |
+| How many customers were acquired?           | **9,592**    |
+| What was Lead-to-Customer conversion?       | **~10.3%**   |
+| What was Session-to-Customer conversion?    | **~1.3%**    |
+| How many subscriptions were generated?      | **9,592**    |
+| How many course enrollments were generated? | **16,628**   |
 
 Campaign-level **ROAS, CAC, revenue and customer value**, along with **MRR, ARR, CLV, funnel performance, and course engagement**, are analyzed in the Tableau dashboards.
 
@@ -178,15 +178,15 @@ Automated **dbt tests** validate:
 
 ## Technology Stack
 
-| Area | Technologies |
-| --- | --- |
-| **Analysis & BI** | SQL, Tableau |
-| **Data Warehouse** | Snowflake |
-| **Transformation** | dbt |
-| **Ingestion** | Python, REST APIs |
-| **Cloud Storage** | AWS S3 |
-| **Orchestration** | Apache Airflow |
-| **Version Control** | Git, GitHub |
+| Area                | Technologies      |
+| ------------------- | ----------------- |
+| **Analysis & BI**   | SQL, Tableau      |
+| **Data Warehouse**  | Snowflake         |
+| **Transformation**  | dbt               |
+| **Ingestion**       | Python, REST APIs |
+| **Cloud Storage**   | AWS S3            |
+| **Orchestration**   | Apache Airflow    |
+| **Version Control** | Git, GitHub       |
 
 ---
 
@@ -194,24 +194,48 @@ Automated **dbt tests** validate:
 
 ```text
 LearnLoop/
+│
 ├── airflow/
+│   └── dags/
+│       └── learnloop_pipeline_dag.py
+│
 ├── docs/
 │   └── dashboards/
 │       ├── campaign_performance.jpg
 │       ├── course_performance.jpg
 │       ├── marketing_funnel.jpg
 │       └── subscription_&_customer_value.jpg
+│
 ├── ingestion/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── logger.py
+│   ├── run_pipeline.py
+│   ├── s3_uploader.py
+│   └── validator.py
+│
 ├── learnloop_dbt/
-│   └── models/
-│       ├── staging/
-│       ├── intermediate/
-│       ├── marts/
-│       └── analytics/
+│   ├── analyses/
+│   ├── macros/
+│   ├── models/
+│   │   ├── staging/
+│   │   ├── intermediate/
+│   │   ├── marts/
+│   │   └── analytics/
+│   ├── seeds/
+│   ├── snapshots/
+│   ├── tests/
+│   ├── .gitignore
+│   ├── README.md
+│   └── dbt_project.yml
+│
 ├── synthetic_data/
+│   └── generate_data.py
+│
+├── .gitignore
+├── README.md
 ├── dashboards_2.twb
-├── requirements.txt
-└── README.md
+└── requirements.txt
 ```
 
 ---
