@@ -1,12 +1,12 @@
-# LearnLoop — Plataforma de Analítica de Marketing
+# Plataforma de Analítica de Marketing LearnLoop
 
 **Analítica de Marketing End-to-End | SQL · Tableau · Snowflake · dbt · Python · Airflow · AWS S3**
 
-## Descripción del Proyecto
+## Descripción General del Proyecto
 
 **LearnLoop** es una empresa SaaS EdTech simulada basada en suscripciones que vende cursos en línea y capacitación corporativa.
 
-Sus datos de marketing, sitio web, CRM, suscripciones e ingresos están almacenados en sistemas separados, lo que dificulta entender qué campañas realmente generan clientes e ingresos.
+Sus datos de marketing, sitio web, CRM, suscripciones e ingresos están almacenados en sistemas separados, lo que dificulta comprender qué campañas realmente generan clientes e ingresos.
 
 Construí una **plataforma de analítica de marketing end-to-end** que conecta:
 
@@ -14,24 +14,24 @@ Construí una **plataforma de analítica de marketing end-to-end** que conecta:
 
 La solución utiliza **Python, AWS S3, Snowflake, dbt, SQL, Airflow y Tableau** para centralizar los datos, calcular KPIs de negocio y entregar dashboards orientados a la toma de decisiones.
 
-> **Objetivo:** ayudar a LearnLoop a entender dónde la inversión en marketing está generando valor y dónde se está desperdiciando presupuesto.
+> **Objetivo:** ayudar a LearnLoop a comprender dónde la inversión en marketing está generando valor y dónde se está desperdiciando presupuesto.
 
 ---
 
-## Principales Hallazgos
+## Hallazgos Clave
 
-- **$1.11M de inversión publicitaria generaron $373.5K en ingresos atribuidos → ROAS de 0.34x**
+- **$1.11M de inversión publicitaria generaron $373.5K en ingresos atribuidos → 0.34x ROAS**
 - **CAC = $116.08 por cliente**
 - **740,283 sesiones → 93,276 leads → 9,592 clientes**
 - **Conversión de Lead a Cliente ≈ 10.3%**
-- **Solo \~1.3% de las sesiones del sitio web se convirtieron en clientes**
+- **Solo ~1.3% de las sesiones del sitio web se convirtieron en clientes**
 - **Se generaron 9,592 suscripciones y 16,628 inscripciones a cursos**
 
 ### Conclusión Principal
 
 La mayor oportunidad no consiste simplemente en generar más tráfico.
 
-LearnLoop debería mejorar la **eficiencia de las campañas y la conversión del funnel**, y luego trasladar una mayor parte del presupuesto hacia campañas que generen un mejor **ROAS, menor CAC y mayor valor del cliente**.
+LearnLoop debería mejorar la **eficiencia de las campañas y la conversión del funnel**, y luego destinar más presupuesto hacia las campañas que generen un mejor **ROAS, menor CAC y mayor valor del cliente**.
 
 ---
 
@@ -39,7 +39,7 @@ LearnLoop debería mejorar la **eficiencia de las campañas y la conversión del
 
 1. **Reasignar presupuesto hacia campañas con mayor ROAS**
 
-   - Reducir la inversión en campañas con bajo retorno de ingresos.
+   - Reducir la inversión en campañas con un retorno de ingresos débil.
    - Aumentar la inversión en campañas con mayor ROAS y valor del cliente.
 
 2. **Establecer objetivos de ROAS y CAC a nivel de campaña**
@@ -52,21 +52,21 @@ LearnLoop debería mejorar la **eficiencia de las campañas y la conversión del
 
 3. **Mejorar la conversión del funnel antes de comprar más tráfico**
 
-   - Optimizar landing pages, formularios de leads, pruebas gratuitas, lead nurturing y seguimiento comercial.
+   - Optimizar landing pages, formularios de leads, pruebas gratuitas, nutrición de leads y seguimiento de ventas.
 
 4. **Evaluar el CAC junto con el CLV**
 
-   - Una campaña con un CAC más alto todavía puede ser valiosa si genera clientes con un mayor valor de vida.
+   - Una campaña con un CAC más alto puede seguir siendo valiosa si genera clientes con un mayor valor de vida.
 
 5. **Optimizar para clientes e ingresos, no para clics**
 
-   - El rendimiento de marketing debe medirse a lo largo de todo el recorrido:
+   - El desempeño de marketing debería medirse a lo largo de todo el recorrido:
 
 **Inversión → Leads → Clientes → Suscripciones → Ingresos → CLV**
 
 ---
 
-## Preguntas de Negocio y Respuestas
+## Preguntas y Respuestas de Negocio
 
 | Pregunta de Negocio | Respuesta / KPI |
 | ------------------------------------------- | ------------ |
@@ -74,25 +74,25 @@ LearnLoop debería mejorar la **eficiencia de las campañas y la conversión del
 | ¿Cuántos ingresos atribuidos se generaron? | **$373.5K** |
 | ¿Cuál fue el ROAS general? | **0.34x** |
 | ¿Cuál fue el CAC? | **$116.08** |
-| ¿Cuántas sesiones web se generaron? | **740,283** |
+| ¿Cuántas sesiones del sitio web se generaron? | **740,283** |
 | ¿Cuántos leads se generaron? | **93,276** |
 | ¿Cuántos clientes se adquirieron? | **9,592** |
-| ¿Cuál fue la conversión de Lead a Cliente? | **\~10.3%** |
-| ¿Cuál fue la conversión de Sesión a Cliente? | **\~1.3%** |
+| ¿Cuál fue la conversión de Lead a Cliente? | **~10.3%** |
+| ¿Cuál fue la conversión de Sesión a Cliente? | **~1.3%** |
 | ¿Cuántas suscripciones se generaron? | **9,592** |
 | ¿Cuántas inscripciones a cursos se generaron? | **16,628** |
 
-El **ROAS, CAC, ingresos y valor del cliente a nivel de campaña**, junto con **MRR, ARR, CLV, rendimiento del funnel y engagement de cursos**, se analizan en los dashboards de Tableau.
+El **ROAS, CAC, ingresos y valor del cliente** a nivel de campaña, junto con **MRR, ARR, CLV, desempeño del funnel y participación en cursos**, son analizados en los dashboards de Tableau.
 
 ---
 
-## Dashboards en Tableau
+## Dashboards de Tableau
 
-### 1. Rendimiento de Campañas
+### 1. Desempeño de Campañas
 
-**Inversión Publicitaria · Ingresos · ROAS · CAC · Ingresos por Campaña · ROAS por Campaña · Inversión vs. Ingresos · Rendimiento a lo Largo del Tiempo**
+**Inversión Publicitaria · Ingresos · ROAS · CAC · Ingresos por Campaña · ROAS por Campaña · Inversión vs. Ingresos · Desempeño a lo Largo del Tiempo**
 
-![Dashboard de Rendimiento de Campañas](docs/dashboards/campaign_performance.jpg)
+![Dashboard de Desempeño de Campañas](docs/dashboards/campaign_performance.jpg)
 
 ### 2. Funnel de Marketing
 
@@ -106,11 +106,11 @@ El **ROAS, CAC, ingresos y valor del cliente a nivel de campaña**, junto con **
 
 ![Dashboard de Suscripciones y Valor del Cliente](docs/dashboards/subscription_&_customer_value.jpg)
 
-### 4. Rendimiento de Cursos
+### 4. Desempeño de Cursos
 
-**Inscripciones · Finalizaciones · Tasa de Finalización · Inscripciones por Curso · Categoría · Rendimiento a lo Largo del Tiempo**
+**Inscripciones · Finalizaciones · Tasa de Finalización · Inscripciones por Curso · Categoría · Desempeño a lo Largo del Tiempo**
 
-![Dashboard de Rendimiento de Cursos](docs/dashboards/course_performance.jpg)
+![Dashboard de Desempeño de Cursos](docs/dashboards/course_performance.jpg)
 
 ---
 
@@ -120,11 +120,11 @@ El **ROAS, CAC, ingresos y valor del cliente a nivel de campaña**, junto con **
 Google Ads ──────┐
 Meta Ads ────────┤
 GA4 ─────────────┤
-HubSpot ─────────┼────► Python ETL
+HubSpot ─────────┼────► ETL con Python
 Stripe ──────────┤           │
 Datos de Cursos ─┘           ▼
                            AWS S3
-                          Raw JSON
+                          JSON Raw
                              │
                              ▼
                           Snowflake
@@ -141,7 +141,7 @@ Datos de Cursos ─┘           ▼
                           Tableau
                              │
                              ▼
-                    Decisiones de Negocio
+                   Decisiones de Negocio
 ```
 
 **Apache Airflow** orquesta y monitorea el pipeline desde la ingesta de datos hasta la transformación y las pruebas de calidad de datos.
@@ -166,7 +166,7 @@ Datos de Cursos ─┘           ▼
 
 ## Calidad de Datos
 
-Las pruebas automatizadas de **dbt** validan:
+Las **pruebas automatizadas de dbt** validan:
 
 - Valores nulos
 - Claves únicas
@@ -180,11 +180,11 @@ Las pruebas automatizadas de **dbt** validan:
 
 | Área | Tecnologías |
 | ------------------- | ----------------- |
-| **Análisis y BI** | SQL, Tableau |
+| **Análisis & BI** | SQL, Tableau |
 | **Data Warehouse** | Snowflake |
 | **Transformación** | dbt |
 | **Ingesta** | Python, REST APIs |
-| **Almacenamiento Cloud** | AWS S3 |
+| **Almacenamiento en la Nube** | AWS S3 |
 | **Orquestación** | Apache Airflow |
 | **Control de Versiones** | Git, GitHub |
 
@@ -253,13 +253,13 @@ LearnLoop transforma datos fragmentados de marketing, clientes e ingresos en una
 
 > **¿Qué inversiones de marketing adquieren clientes de manera eficiente y generan el mayor valor para el negocio?**
 
-**Problema de Negocio → Integración de Datos → Análisis SQL → KPIs → Insights → Recomendaciones → Dashboards en Tableau**
+**Problema de Negocio → Integración de Datos → Análisis SQL → KPIs → Insights → Recomendaciones → Dashboards de Tableau**
 
 ---
 
 ## Autor
 
 **Juan David Guerrero**  
-**Data Analyst**
+**Analista de Datos**
 
-SQL · Tableau · Python · Snowflake · dbt · Marketing Analytics
+SQL · Tableau · Python · Snowflake · dbt · Analítica de Marketing
