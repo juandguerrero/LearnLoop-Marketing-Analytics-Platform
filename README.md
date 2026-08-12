@@ -27,7 +27,7 @@ The solution uses **Python, AWS S3, Snowflake, dbt, SQL, Airflow, and Tableau** 
 - **Only ~1.3% of website sessions became customers**
 - **9,592 subscriptions and 16,628 course enrollments were generated**
 
-### Main takeaway
+### Main Takeaway
 
 The biggest opportunity is not simply generating more traffic.
 
@@ -43,10 +43,10 @@ LearnLoop should improve **campaign efficiency and funnel conversion**, then shi
 
 2. **Set campaign-level ROAS and CAC targets**
    - Classify campaigns as:
-   - **Scale**
-   - **Optimize**
-   - **Reduce**
-   - **Pause**
+     - **Scale**
+     - **Optimize**
+     - **Reduce**
+     - **Pause**
 
 3. **Improve funnel conversion before buying more traffic**
    - Optimize landing pages, lead forms, free trials, lead nurturing, and sales follow-up.
@@ -61,233 +61,43 @@ LearnLoop should improve **campaign efficiency and funnel conversion**, then shi
 
 ---
 
-# Business Questions & Answers
+## Business Questions & Answers
 
-## 1. Which campaigns generate the strongest marketing return?
+| Business Question | Answer / KPI |
+|---|---|
+| How much was invested in advertising? | **$1.11M** |
+| How much attributed revenue was generated? | **$373.5K** |
+| What was the overall ROAS? | **0.34x** |
+| What was the CAC? | **$116.08** |
+| How many website sessions were generated? | **740,283** |
+| How many leads were generated? | **93,276** |
+| How many customers were acquired? | **9,592** |
+| What was Lead-to-Customer conversion? | **~10.3%** |
+| What was Session-to-Customer conversion? | **~1.3%** |
+| How many subscriptions were generated? | **9,592** |
+| How many course enrollments were generated? | **16,628** |
 
-Overall campaign performance produced:
-
-- **Ad Spend:** ~$1.11M
-- **Attributed Revenue:** ~$373.5K
-- **Overall ROAS:** ~**0.34x**
-
-This indicates that marketing efficiency is currently weak at the portfolio level.
-
-**Business decision:** compare campaigns individually and move budget toward those with stronger ROAS and customer value.
-
----
-
-## 2. What is the Customer Acquisition Cost?
-
-LearnLoop acquired:
-
-**9,592 customers**
-
-from approximately:
-
-**$1.11M in advertising spend**
-
-Therefore:
-
-**CAC ≈ $116.08**
-
-**Business decision:** monitor CAC by campaign and compare it with CLV.
+Campaign-level **ROAS, CAC, revenue and customer value**, along with **MRR, ARR, CLV, funnel performance, and course engagement**, are analyzed in the Tableau dashboards.
 
 ---
 
-## 3. Where is the biggest funnel drop-off?
+## Tableau Dashboards
 
-The customer journey includes:
+### 1. Campaign Performance
+**Ad Spend · Revenue · ROAS · CAC · Revenue by Campaign · ROAS by Campaign · Spend vs. Revenue · Performance Over Time**
 
-| Funnel Stage | Volume |
-|---|---:|
-| Website Sessions | **740,283** |
-| Leads | **93,276** |
-| Customers | **9,592** |
+### 2. Marketing Funnel
+**Sessions → Leads → MQLs → SQLs → Customers · Conversion Rates · Funnel Drop-Off · Conversion Trends**
 
-This means:
+### 3. Subscription & Customer Value
+**Subscriptions · Active Subscriptions · MRR · ARR · CLV · MRR by Plan · Customer Value by Campaign**
 
-- Session-to-Lead Conversion ≈ **12.6%**
-- Lead-to-Customer Conversion ≈ **10.3%**
-- Session-to-Customer Conversion ≈ **1.3%**
-
-The Tableau funnel also tracks the intermediate **MQL and SQL stages**.
-
-**Business decision:** improving funnel conversion can increase customers without requiring the same proportional increase in marketing spend.
+### 4. Course Performance
+**Enrollments · Completions · Completion Rate · Enrollments by Course · Category · Performance Over Time**
 
 ---
 
-## 4. What is the Lead-to-Customer Conversion Rate?
-
-\[
-\text{Lead-to-Customer Conversion}
-=
-\frac{9,592}{93,276}
-\approx 10.3\%
-\]
-
-Approximately **1 in every 10 leads becomes a customer**.
-
-**Business decision:** improve lead quality, nurturing, qualification, and conversion.
-
----
-
-## 5. How should LearnLoop evaluate campaign quality?
-
-Campaigns should not be evaluated only using:
-
-**Impressions → Clicks**
-
-They should be evaluated across:
-
-**Spend → Leads → Customers → Revenue → ROAS → CLV**
-
-This distinguishes campaigns that generate activity from campaigns that create real business value.
-
----
-
-## 6. What role does Customer Lifetime Value play?
-
-CLV provides a longer-term view of customer quality.
-
-Two campaigns may acquire the same number of customers but produce very different business value.
-
-**Business decision:** compare:
-
-**CLV / CAC**
-
-and prioritize campaigns that produce stronger long-term customer economics.
-
----
-
-## 7. How is subscription performance measured?
-
-The subscription dashboard analyzes:
-
-- Total Subscriptions
-- Active Subscriptions
-- MRR
-- ARR
-- MRR Over Time
-- MRR by Subscription Plan
-- Customer Value
-
-The project generated:
-
-**9,592 subscriptions**
-
-**Business decision:** evaluate whether customer acquisition is translating into sustainable recurring revenue.
-
----
-
-## 8. Which courses are performing best?
-
-The Course Performance dashboard analyzes:
-
-- Enrollments by Course
-- Enrollments by Category
-- Completion Rate by Course
-- Enrollments Over Time
-
-The project generated:
-
-**16,628 course enrollments**
-
-**Business decision:** identify the courses and categories that attract and engage customers most effectively.
-
----
-
-# Tableau Dashboards
-
-The final analytical solution contains **four Tableau dashboards**.
-
-## 1. Campaign Performance
-
-**Purpose:** evaluate marketing efficiency and support budget allocation.
-
-### KPIs
-
-- Total Ad Spend
-- Total Revenue
-- ROAS
-- CAC
-
-### Analysis
-
-- Revenue by Campaign
-- ROAS by Campaign
-- Spend vs. Revenue
-- Performance Over Time
-
-**Decision supported:** where should marketing budget be increased, reduced, or optimized?
-
----
-
-## 2. Marketing Funnel
-
-**Purpose:** identify where prospects are lost during acquisition.
-
-### Funnel
-
-**Sessions → Leads → MQLs → SQLs → Customers**
-
-### Analysis
-
-- Funnel Progression
-- Stage Conversion
-- Funnel Drop-Off
-- Conversion Trends
-
-**Decision supported:** which funnel stages should be optimized?
-
----
-
-## 3. Subscription & Customer Value
-
-**Purpose:** understand recurring revenue and customer value.
-
-### KPIs
-
-- Total Subscriptions
-- Active Subscriptions
-- MRR
-- ARR
-- Average CLV
-
-### Analysis
-
-- MRR Over Time
-- MRR by Subscription Plan
-- Subscriptions by Plan
-- Customer Value by Campaign
-
-**Decision supported:** which acquisition sources and subscription plans generate the strongest long-term value?
-
----
-
-## 4. Course Performance
-
-**Purpose:** understand product engagement after customer acquisition.
-
-### KPIs
-
-- Total Enrollments
-- Total Completions
-- Incomplete Enrollments
-- Completion Rate
-
-### Analysis
-
-- Enrollments by Course
-- Enrollments by Category
-- Completion Rate by Course
-- Enrollments Over Time
-
-**Decision supported:** which courses attract and retain the most engagement?
-
----
-
-# Data Architecture
+## Data Architecture
 
 ```text
 Google Ads ──────┐
@@ -301,146 +111,81 @@ Course Data ─────┘           ▼
                              │
                              ▼
                           Snowflake
-                          Raw Layer
                              │
                              ▼
                              dbt
                              │
-                ┌────────────┼────────────┐
-                ▼            ▼            ▼
-             Staging    Intermediate     Marts
-                                           │
-                                           ▼
-                                  Analytics / KPIs
-                                           │
-                                           ▼
-                                        Tableau
-                                           │
-                                           ▼
-                                  Business Decisions
+                Staging → Intermediate → Marts
+                             │
+                             ▼
+                       Analytics / KPIs
+                             │
+                             ▼
+                          Tableau
+                             │
+                             ▼
+                     Business Decisions
 ```
 
-**Apache Airflow** orchestrates the workflow from ingestion through transformation and data-quality testing.
+**Apache Airflow** orchestrates and monitors the pipeline from data ingestion through transformation and data-quality testing.
 
 ---
 
-# ETL & Analytics Pipeline
+## Data Model
 
-1. **Python** extracts and validates source data.
-2. Raw JSON data is stored in **AWS S3**.
-3. Data is loaded into **Snowflake**.
-4. **dbt staging models** clean and standardize the data.
-5. **Intermediate models** combine data across systems.
-6. **Fact and dimension tables** organize the analytical warehouse.
-7. **dbt tests** validate data quality.
-8. **SQL analytics models** calculate business KPIs.
-9. **Apache Airflow** orchestrates the workflow.
-10. **Tableau** presents the final analysis.
+### Dimensions
 
----
+`dim_date` · `dim_customer` · `dim_campaign` · `dim_channel` · `dim_course` · `dim_subscription_plan` · `dim_device`
 
-# Data Warehouse
+### Fact Tables
 
-The Snowflake warehouse uses dimensional modeling.
+`fact_marketing_spend` · `fact_website_sessions` · `fact_leads` · `fact_subscriptions` · `fact_revenue` · `fact_course_enrollments`
 
-## Dimensions
+### Analytics Models
 
-- `dim_date`
-- `dim_customer`
-- `dim_campaign`
-- `dim_channel`
-- `dim_course`
-- `dim_subscription_plan`
-- `dim_device`
-
-## Fact Tables
-
-- `fact_marketing_spend`
-- `fact_website_sessions`
-- `fact_leads`
-- `fact_subscriptions`
-- `fact_revenue`
-- `fact_course_enrollments`
-
-The model connects:
-
-**Marketing Activity → Website Behavior → Leads → Customers → Subscriptions → Revenue → Course Engagement**
+`kpi_campaign_performance` · `kpi_funnel_performance` · `kpi_subscription_performance` · `kpi_customer_value` · `kpi_course_performance`
 
 ---
 
-# dbt Analytics Layer
+## Data Quality
 
-Business-ready models provide prepared datasets for Tableau:
-
-- `kpi_campaign_performance`
-- `kpi_funnel_performance`
-- `kpi_subscription_performance`
-- `kpi_customer_value`
-- `kpi_course_performance`
-
-This keeps important business logic in the data layer and avoids duplicating complex calculations across Tableau worksheets.
-
----
-
-# Data Quality
-
-Automated dbt tests validate:
+Automated **dbt tests** validate:
 
 - Null values
-- Unique identifiers
+- Unique keys
 - Referential integrity
 - Model relationships
-- Accepted categorical values
-- Business-critical fields
+- Accepted values
 
 ---
 
-# Technology Stack
+## Technology Stack
 
 | Area | Technologies |
 |---|---|
-| **Data Analysis** | SQL |
-| **Business Intelligence** | Tableau |
+| **Analysis & BI** | SQL, Tableau |
 | **Data Warehouse** | Snowflake |
-| **Data Transformation** | dbt |
-| **Data Modeling** | Dimensional Modeling / Star Schema |
-| **Data Ingestion** | Python, REST APIs |
+| **Transformation** | dbt |
+| **Ingestion** | Python, REST APIs |
 | **Cloud Storage** | AWS S3 |
 | **Orchestration** | Apache Airflow |
-| **Data Quality** | dbt Tests |
 | **Version Control** | Git, GitHub |
 
 ---
 
-# Repository Structure
+## Repository Structure
 
 ```text
 LearnLoop/
-│
 ├── airflow/
-│   └── dags/
-│       └── learnloop_pipeline_dag.py
-│
 ├── ingestion/
-│   ├── config.py
-│   ├── logger.py
-│   ├── run_pipeline.py
-│   ├── s3_uploader.py
-│   └── validator.py
-│
 ├── learnloop_dbt/
-│   ├── models/
-│   │   ├── staging/
-│   │   ├── intermediate/
-│   │   ├── marts/
-│   │   │   ├── dimensions/
-│   │   │   └── facts/
-│   │   └── analytics/
-│   └── dbt_project.yml
-│
+│   └── models/
+│       ├── staging/
+│       ├── intermediate/
+│       ├── marts/
+│       └── analytics/
 ├── synthetic_data/
-│   └── generate_data.py
-│
 ├── dashboards_2.twb
 ├── requirements.txt
 └── README.md
@@ -448,37 +193,19 @@ LearnLoop/
 
 ---
 
-# Skills Demonstrated
+## Skills Demonstrated
 
-**Data Analysis:** SQL · Business Analysis · KPI Development · Funnel Analysis · Customer Analysis · Revenue Analysis
-
-**Marketing Analytics:** ROAS · CAC · Campaign Performance · Conversion Analysis · Marketing Attribution
-
-**SaaS Analytics:** MRR · ARR · CLV · Subscription Analytics
-
-**Business Intelligence:** Tableau · Dashboard Design · Data Visualization · Executive Reporting
-
-**Data Modeling:** Snowflake · dbt · Dimensional Modeling · Star Schema
-
-**Data Engineering:** Python · REST APIs · AWS S3 · ETL · Apache Airflow · Data Validation
+**SQL · Tableau · Marketing Analytics · Funnel Analysis · ROAS · CAC · CLV · MRR · ARR · Snowflake · dbt · Python · AWS S3 · Airflow · Dimensional Modeling · Data Quality**
 
 ---
 
-# Project Outcome
+## Project Outcome
 
-The project turns fragmented marketing and customer data into a **single view of customer acquisition and business value**.
+LearnLoop transforms fragmented marketing, customer, and revenue data into a **single analytical view of the customer journey**.
 
-Instead of asking:
+> **Which marketing investments acquire customers efficiently and generate the strongest business value?**
 
-> **Which campaign generated the most clicks?**
-
-LearnLoop can ask:
-
-> **Which marketing investments acquire customers efficiently and generate the strongest revenue and customer value?**
-
-The project demonstrates:
-
-**Business Problem → Data Integration → SQL Analysis → Insights → Recommendations → Tableau Dashboards → Business Decisions**
+**Business Problem → Data Integration → SQL Analysis → KPIs → Insights → Recommendations → Tableau Dashboards**
 
 ---
 
