@@ -204,7 +204,7 @@ LearnLoop/
 │       ├── campaign_performance.jpg
 │       ├── course_performance.jpg
 │       ├── marketing_funnel.jpg
-│       └── subscription_&_customer_value.jpg
+│       └── subscription_customer_value.jpg
 │
 ├── ingestion/
 │   ├── __init__.py
@@ -234,7 +234,8 @@ LearnLoop/
 │
 ├── .gitignore
 ├── README.md
-├── dashboards_2.twb
+├── README_ES.md
+├── learnloop_tableau_dashboards.twb
 └── requirements.txt
 ```
 
