@@ -104,7 +104,7 @@ Campaign-level **ROAS, CAC, revenue and customer value**, along with **MRR, ARR,
 
 **Subscriptions · Active Subscriptions · MRR · ARR · CLV · MRR by Plan · Customer Value by Campaign**
 
-![Subscription and Customer Value Dashboard](docs/dashboards/subscription_&_customer_value.jpg)
+![Subscription and Customer Value Dashboard](docs/dashboards/subscription_customer_value.jpg)
 
 ### 4. Course Performance
 
