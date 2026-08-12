@@ -81,27 +81,90 @@ El **ROAS, CAC, ingresos y valor del cliente por campaña**, junto con **MRR, AR
 
 ---
 
-## Dashboards en Tableau
+# Dashboards en Tableau
 
-### 1. Rendimiento de Campañas
+## 1. Rendimiento de Campañas
 
-**Inversión Publicitaria · Ingresos · ROAS · CAC · Ingresos por Campaña · ROAS por Campaña · Inversión vs. Ingresos · Rendimiento a lo Largo del Tiempo**
+Este dashboard analiza la eficiencia de la inversión publicitaria y permite comparar el desempeño de las campañas en términos de gasto, ingresos, ROAS y adquisición de clientes.
 
-### 2. Funnel de Marketing
+### KPIs y análisis
 
-**Sesiones → Leads → MQLs → SQLs → Clientes · Tasas de Conversión · Abandono del Funnel · Tendencias de Conversión**
+- Inversión publicitaria
+- Ingresos atribuidos
+- ROAS
+- CAC
+- Ingresos por campaña
+- ROAS por campaña
+- Inversión vs. ingresos
+- Rendimiento a lo largo del tiempo
 
-### 3. Suscripciones y Valor del Cliente
-
-**Suscripciones · Suscripciones Activas · MRR · ARR · CLV · MRR por Plan · Valor del Cliente por Campaña**
-
-### 4. Rendimiento de Cursos
-
-**Inscripciones · Finalizaciones · Tasa de Finalización · Inscripciones por Curso · Categoría · Rendimiento a lo Largo del Tiempo**
+![Dashboard de Rendimiento de Campañas](docs/dashboards/campaign_performance.jpg)
 
 ---
 
-## Arquitectura de Datos
+## 2. Funnel de Marketing
+
+Este dashboard analiza el recorrido completo de los usuarios desde la visita al sitio web hasta la adquisición como clientes.
+
+### Funnel
+
+**Sesiones → Leads → MQLs → SQLs → Clientes**
+
+### KPIs y análisis
+
+- Sesiones
+- Leads
+- MQLs
+- SQLs
+- Clientes
+- Tasas de conversión
+- Abandono entre etapas
+- Conversión de Lead a Cliente
+- Conversión de Sesión a Cliente
+- Tendencias de conversión
+
+![Dashboard del Funnel de Marketing](docs/dashboards/marketing_funnel.jpg)
+
+---
+
+## 3. Suscripciones y Valor del Cliente
+
+Este dashboard conecta la adquisición de clientes con el valor económico generado posteriormente por las suscripciones.
+
+### KPIs y análisis
+
+- Suscripciones
+- Suscripciones activas
+- MRR
+- ARR
+- CLV
+- MRR por plan
+- Clientes por campaña
+- Valor del cliente por campaña
+- Ingresos generados por clientes
+
+![Dashboard de Suscripciones y Valor del Cliente](docs/dashboards/subscription_&_customer_value.jpg)
+
+---
+
+## 4. Rendimiento de Cursos
+
+Este dashboard analiza cómo los clientes interactúan con los cursos después de adquirir una suscripción.
+
+### KPIs y análisis
+
+- Inscripciones
+- Finalizaciones
+- Tasa de finalización
+- Inscripciones por curso
+- Rendimiento por categoría
+- Rendimiento de cursos a lo largo del tiempo
+
+![Dashboard de Rendimiento de Cursos](docs/dashboards/course_performance.jpg)
+
+---
+
+# Arquitectura de Datos
 
 ```text
 Google Ads ──────┐
@@ -133,27 +196,166 @@ Datos de Cursos ─┘           ▼
 
 **Apache Airflow** orquesta y monitorea el pipeline desde la ingesta de datos hasta las transformaciones y pruebas de calidad de datos.
 
+### Flujo del Pipeline
+
+```text
+Fuentes de Datos
+      │
+      ▼
+Python ETL
+      │
+      ▼
+AWS S3
+      │
+      ▼
+Snowflake
+      │
+      ▼
+dbt
+      │
+      ├── Staging
+      │
+      ├── Intermediate
+      │
+      ├── Marts
+      │
+      └── Analytics
+      │
+      ▼
+Tableau
+      │
+      ▼
+Insights de Negocio
+```
+
 ---
 
-## Modelo de Datos
+# Modelo de Datos
 
-### Dimensiones
+El modelo analítico utiliza una arquitectura dimensional con tablas de hechos y dimensiones para facilitar el análisis en Tableau.
 
-`dim_date` · `dim_customer` · `dim_campaign` · `dim_channel` · `dim_course` · `dim_subscription_plan` · `dim_device`
+## Dimensiones
 
-### Tablas de Hechos
+`dim_date`
 
-`fact_marketing_spend` · `fact_website_sessions` · `fact_leads` · `fact_subscriptions` · `fact_revenue` · `fact_course_enrollments`
+`dim_customer`
 
-### Modelos Analíticos
+`dim_campaign`
 
-`kpi_campaign_performance` · `kpi_funnel_performance` · `kpi_subscription_performance` · `kpi_customer_value` · `kpi_course_performance`
+`dim_channel`
+
+`dim_course`
+
+`dim_subscription_plan`
+
+`dim_device`
+
+## Tablas de Hechos
+
+`fact_marketing_spend`
+
+`fact_website_sessions`
+
+`fact_leads`
+
+`fact_subscriptions`
+
+`fact_revenue`
+
+`fact_course_enrollments`
+
+## Modelos Analíticos
+
+Los modelos analíticos agregan y preparan la información necesaria para los dashboards y KPIs.
+
+`kpi_campaign_performance`
+
+`kpi_funnel_performance`
+
+`kpi_subscription_performance`
+
+`kpi_customer_value`
+
+`kpi_course_performance`
 
 ---
 
-## Calidad de Datos
+# Transformaciones con dbt
 
-Las pruebas automatizadas de **dbt** validan:
+La capa de transformación está organizada utilizando tres niveles principales.
+
+```text
+Raw Data
+   │
+   ▼
+Staging
+   │
+   ▼
+Intermediate
+   │
+   ▼
+Marts
+   │
+   ▼
+Analytics / KPIs
+```
+
+### Staging
+
+Estandarización inicial de los datos provenientes de cada fuente.
+
+Ejemplos:
+
+```text
+stg_google_ads
+stg_meta_ads
+stg_ga4_sessions
+stg_hubspot_contacts
+stg_stripe_payments
+stg_stripe_subscriptions
+stg_course_enrollments
+```
+
+### Intermediate
+
+Transformaciones de negocio y combinación de fuentes.
+
+Ejemplos:
+
+```text
+int_marketing_performance
+int_customer_revenue
+int_subscription_metrics
+```
+
+### Marts
+
+Modelo dimensional utilizado para análisis.
+
+```text
+Dimensions
+Facts
+```
+
+### Analytics
+
+Modelos finales diseñados para responder preguntas de negocio y alimentar Tableau.
+
+```text
+kpi_campaign_performance
+kpi_funnel_performance
+kpi_subscription_performance
+kpi_customer_value
+kpi_course_performance
+```
+
+---
+
+# Calidad de Datos
+
+Las pruebas automatizadas de **dbt** validan la calidad y consistencia de los datos.
+
+Las principales validaciones incluyen:
 
 - Valores nulos
 - Claves únicas
@@ -161,9 +363,11 @@ Las pruebas automatizadas de **dbt** validan:
 - Relaciones entre modelos
 - Valores aceptados
 
+Estas pruebas permiten detectar problemas antes de que los datos lleguen a los dashboards.
+
 ---
 
-## Stack Tecnológico
+# Stack Tecnológico
 
 | Área | Tecnologías |
 | --- | --- |
@@ -177,7 +381,7 @@ Las pruebas automatizadas de **dbt** validan:
 
 ---
 
-## Estructura del Repositorio
+# Estructura del Repositorio
 
 ```text
 LearnLoop/
@@ -221,31 +425,63 @@ LearnLoop/
 │
 ├── .gitignore
 ├── README.md
+├── README_ES.md
 ├── dashboards_2.twb
 └── requirements.txt
 ```
 
 ---
 
-## Habilidades Demostradas
+# Habilidades Demostradas
 
-**SQL · Tableau · Analítica de Marketing · Análisis de Funnel · ROAS · CAC · CLV · MRR · ARR · Snowflake · dbt · Python · AWS S3 · Airflow · Modelado Dimensional · Calidad de Datos**
+### Analítica
+
+**SQL · Tableau · Marketing Analytics · Funnel Analysis**
+
+### KPIs de Marketing
+
+**ROAS · CAC · CLV · Conversion Rate**
+
+### Métricas SaaS
+
+**MRR · ARR · Suscripciones · Customer Value**
+
+### Data Engineering
+
+**Python · REST APIs · AWS S3 · Snowflake · dbt · Apache Airflow**
+
+### Modelado de Datos
+
+**Star Schema · Fact Tables · Dimension Tables · Dimensional Modeling**
+
+### Data Quality
+
+**dbt Tests · Referential Integrity · Null Validation · Unique Keys · Accepted Values**
+
+### Desarrollo
+
+**Git · GitHub · Version Control**
 
 ---
 
-## Resultado del Proyecto
+# Resultado del Proyecto
 
-LearnLoop transforma datos fragmentados de marketing, clientes e ingresos en una **visión analítica unificada del recorrido del cliente**.
+LearnLoop transforma datos fragmentados provenientes de publicidad, comportamiento web, CRM, suscripciones e ingresos en una **visión analítica unificada del recorrido del cliente**.
+
+La plataforma permite responder la pregunta principal del negocio:
 
 > **¿Qué inversiones de marketing adquieren clientes de manera eficiente y generan el mayor valor para el negocio?**
 
-**Problema de Negocio → Integración de Datos → Análisis SQL → KPIs → Insights → Recomendaciones → Dashboards en Tableau**
+El proyecto demuestra un flujo completo de analítica:
+
+**Problema de Negocio → Ingesta de Datos → Data Warehouse → Transformación → Modelado → SQL → KPIs → Insights → Recomendaciones → Tableau Dashboards**
 
 ---
 
-## Autor
+# Autor
 
-**Juan David Guerrero**  
+**Juan David Guerrero**
+
 **Data Analyst**
 
 SQL · Tableau · Python · Snowflake · dbt · Marketing Analytics
