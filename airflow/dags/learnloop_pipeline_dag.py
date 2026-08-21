@@ -10,6 +10,9 @@ PROJECT_ROOT = (
 )
 
 DBT_PROJECT_DIR = f"{PROJECT_ROOT}/learnloop_dbt"
+SNOWFLAKE_LOAD_SCRIPT = (
+    f"{PROJECT_ROOT}/snowflake/load_s3_to_snowflake.py"
+)
 
 
 default_args = {
@@ -29,6 +32,7 @@ with DAG(
     tags=["learnloop", "marketing", "analytics"],
 ) as dag:
 
+    # 1. Validate raw JSON files and upload them to AWS S3
     run_ingestion = BashOperator(
         task_id="run_ingestion",
         bash_command=f"""
@@ -37,6 +41,16 @@ with DAG(
         """,
     )
 
+    # 2. Load raw JSON files from AWS S3 into Snowflake RAW tables
+    load_s3_to_snowflake = BashOperator(
+        task_id="load_s3_to_snowflake",
+        bash_command=f"""
+            cd "{PROJECT_ROOT}" &&
+            python "{SNOWFLAKE_LOAD_SCRIPT}"
+        """,
+    )
+
+    # 3. Run dbt transformations, tests, and models
     dbt_build = BashOperator(
         task_id="dbt_build",
         bash_command=f"""
@@ -45,6 +59,7 @@ with DAG(
         """,
     )
 
+    # 4. Generate dbt documentation
     generate_dbt_docs = BashOperator(
         task_id="generate_dbt_docs",
         bash_command=f"""
@@ -53,4 +68,9 @@ with DAG(
         """,
     )
 
-    run_ingestion >> dbt_build >> generate_dbt_docs
+    (
+        run_ingestion
+        >> load_s3_to_snowflake
+        >> dbt_build
+        >> generate_dbt_docs
+    )
