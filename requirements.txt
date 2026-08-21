@@ -3,3 +3,4 @@ numpy
 Faker
 boto3
 python-dotenv
+snowflake-connector-python
